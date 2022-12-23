@@ -1,0 +1,127 @@
+{% load i18n %}
+{% load static %}
+
+{#    <div class="container-fluid">#}
+
+
+        <header class="primary">
+			<div class="firstbar">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-3 col-sm-12">
+							<div class="brand">
+								<a href="{% url 'music:home' %}">
+{#									<img src="{% static 'images/logo.png' %}" alt="Magz Logo">#}
+                                    <h1>Africa Hits</h1>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-12">
+							<form action="{% url 'music:search' %}" class="search" autocomplete="off">
+								<div class="form-group">
+									<div class="input-group">
+										<input type="text" name="q" class="form-control" placeholder="Entrer votre recherche">
+										<div class="input-group-btn">
+											<button class="btn btn-primary"><i class="ion-search"></i></button>
+										</div>
+									</div> 
+								</div>
+								<div class="help-block">
+									<div>Popular:</div>
+									<ul>
+										<li><a href="#">HTML5</a></li>
+										<li><a href="#">CSS3</a></li>
+										<li><a href="#">Bootstrap 3</a></li>
+										<li><a href="#">jQuery</a></li>
+										<li><a href="#">AnguarJS</a></li>
+									</ul>
+								</div>
+							</form>
+						</div>
+						<div class="col-md-3 col-sm-12 text-right">
+							<ul class="nav-icons">
+                                {% if not request.user.is_authenticated %}
+								    <li><a href="{% url 'account_signup' %}"><i class="ion-person-add"></i><div>Register</div></a></li>
+								    <li><a href="{% url 'account_login' %}"><i class="ion-person"></i><div>Login</div></a></li>
+                                {% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Start nav -->
+			<nav class="menu">
+				<div class="container-fluid">
+					<div class="brand">
+						<a href="{% url 'music:home' %}">
+{#							<img src="{% static 'images/logo.png' %}" alt="Magz Logo">#}
+                            <h5>Africa Hits</h5>
+						</a>
+					</div>
+					<div class="mobile-toggle">
+						<a href="#" data-toggle="menu" data-target="#menu-list"><i class="ion-navicon-round"></i></a>
+					</div>
+					<div class="mobile-toggle">
+						<a href="#" data-toggle="sidebar" data-target="#sidebar"><i class="ion-ios-arrow-left"></i></a>
+					</div>
+					<div id="menu-list">
+						<ul class="nav-list">
+							<li class="for-tablet nav-title"><a>Menu</a></li>
+                            {% if not request.user.is_authenticated %}
+							    <li class="for-tablet"><a href="{% url 'account_login' %}">{% trans "Se connecter" %}</a></li>
+							    <li class="for-tablet"><a href="{% url 'account_signup' %}">{% trans "S'inscrire" %}</a></li>
+                            {% endif %}
+
+                            <li><a href="{% url 'music:home' %}"><i class="icon ion-home"></i> Accueil</a></li>
+
+							<li><a href="{% url 'post_list' %}"><i class="icon ion-android-list"></i> Actualité</a></li>
+							<li><a href="{% url 'music:musics' %}"><i class="icon ion-music-note"></i> Musics </a></li>
+							<li><a href="{% url 'music:playlists' %}"><i class="icon ion-play"></i> Playlists </a></li>
+
+                            <li class="dropdown magz-dropdown"><a href=""><i class="icon ion-ios-videocam"></i> Vidéos <i class="ion-ios-arrow-right"></i></a>
+								<ul class="dropdown-menu">
+									<li><a href="{% url 'videos' %}">- Videos d'internet</a></li>
+									<li><a href="{% url 'teasers' %}">- Teasers</a></li>
+									<li><a href="{% url 'clips' %}">- Clips</a></li>
+								</ul>
+							</li>
+
+							<li><a href="{% url 'emission:emission_podcast_home' %}"><i class="icon ion-headphone"></i> Podcasts</a></li>
+                            <li><a href="{% url 'emission:emission_video_home' %}"><ion-icon name="film"></ion-icon> Emissions Videos</a></li>
+
+                            {% comment %} <li><a href="{% url 'event:event_home' %}"><i class="icon ion-calendar"></i> Evènements</a></li> {% endcomment %}
+                            {% comment %} <li><a href="{% url 'marketing:contact' %}"><i class="icon ion-ios-contact"></i> Contact</a></li> {% endcomment %}
+
+							<li class="dropdown magz-dropdown"><a href="#"><i class="icon ion-person"></i> <i class="ion-ios-arrow-right"></i></a>
+								<ul class="dropdown-menu">
+									<li><a href="#"><i class="icon ion-person"></i> {{ request.user.username }}</a></li>
+{#									<li><a href="#"><i class="icon ion-heart"></i> Favorite</a></li>#}
+                                    {% if request.user.is_authenticated %}
+                                        <li><a href="{% url 'marketing:mail-letter' %}"><i class="icon ion-chatbox"></i> Partager des mails</a></li>
+                                    {% endif %}
+									<li class="divider"></li>
+                                    {% if request.user.is_authenticated %}
+									<li><a href="{% url 'account_logout' %}"><i class="icon ion-log-out"></i> Logout</a></li>
+                                    {% else %}
+                                        <li><a href="{% url 'account_login' %}"><i class="icon ion-log-in"></i> Connexion</a></li>
+                                        <li><a href="{% url 'account_signup' %}"><i class="icon ion-log-in"></i> Inscription</a></li>
+                                    {% endif %}
+								</ul>
+							</li>
+
+							<li class="dropdown magz-dropdown"><a href=""><i class="icon ion-book"></i> Langues <i class="ion-ios-arrow-right"></i></a>
+								<ul class="dropdown-menu">
+									{% for language in languages %}
+									<li><a href="/{{ language.code }}">- {{ language.name_local }}</a></li>
+									{% endfor %}
+								</ul>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<!-- End nav -->
+		</header>
+{#    </div>#}

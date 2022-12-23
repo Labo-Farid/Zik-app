@@ -1,0 +1,281 @@
+{% load crispy_forms_filters %}
+{% load static %}
+{% load blog_tags %}
+{% load music_tags %}
+{% load video_tags %}
+{% load playlist_tags %}
+{% load emission_video_tags %}
+{% load podcast_tags %}
+
+<div class="col-xs-6 col-md-4 sidebar" id="sidebar">
+    <div class="sidebar-title for-tablet">Sidebar</div>
+
+    <aside> 
+        <div class="aside-body">
+
+            {% for ad in recent_videos_teaser_sponsored %}
+                {% if forloop.counter0 == 0 %}
+                {% if ad.video %}
+{#                {% if forloop.first %}#}
+                    <video class="card-image-top" width="325" height="310" controls>
+                        <source src="{{ ad.video.url }}" type="video/mp4">
+                    </video>
+{#                    <h6>{{ ad.title }}</h6>#}
+                    <small>SPONSORED</small>
+                {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </aside>
+
+    <aside>
+        <h1 class="aside-title">Recherche</h1>
+        <form action="{% url 'music:search' %}" class="search" autocomplete="off">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Entrer votre recherche">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary"><i class="ion-search"></i></button>
+                    </div>
+                </div> 
+            </div>
+        </form>
+    </aside>
+
+
+    {% comment %} <aside>
+        <h1 class="aside-title">Categories</h1>
+            {% for cat in categories %}
+                <div class="col-sm-6">
+                    <p><a href="{% url 'category_post_list' cat.slug %}">{{cat.name}}</a></p>
+                </div>
+            {% endfor %}
+    </aside> {% endcomment %}
+
+{#    Musiques premium populaires **************************************************#}
+    <aside>
+        <h1 class="aside-title">Musiques populaires</h1>
+        <div class="aside-body">
+            {% load music_tags %}
+            {% render_popular_musics %}
+        </div>
+    </aside>
+
+    <aside>
+        <div class="aside-body">
+          <figure class="ads">
+              {% for ad in recent_attachs_sponsored_cover %}
+                {% if not ad.is_rectange %}
+                    {% if forloop.counter0 == 0 %}
+                        <img src="{{ ad.image.url }}">
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <figcaption>SPONSORED</figcaption>
+          </figure>
+        </div>
+    </aside>
+
+    {% comment %} <aside>
+        <div class="aside-body">
+            <form action="{% url 'email-list-signup' %}" method="POST" class="newsletter">
+                {% csrf_token %}
+                <div class="icon">
+                    <i class="ion-ios-email-outline"></i>
+                    <h1>Newsletter</h1>
+                </div>
+                <div class="form-group">
+                    {{ form }}
+                    <div class="input-group-btn">
+                        <button type="submit" class="submit btn btn-primary"><i class="ion-paper-airplane"></i></button>
+                    </div>
+                </div>
+                <p>By subscribing you will receive new articles in your email.</p>
+            </form>
+        </div>
+    </aside> {% endcomment %}
+
+    <aside>
+        <h1 class="aside-title">Newsletter</h1>
+        <div class="aside-body">
+            <div class="form-holder">
+                {% load newsletter_tags %}
+            	{% render_newsletter %}
+              </div>
+        </div>
+    </aside>
+
+{#    Articles populaires **************************************************#}
+    <aside>
+        <h1 class="aside-title">Articles populaires</h1>
+        <div class="aside-body">
+            {% load blog_tags %}
+            {% render_popular_posts %}
+        </div>
+    </aside>
+
+    {% comment %} <aside>
+        <h1 class="aside-title">Musics Categories</h1>
+        <div class="aside-body">
+            {% load music_tags %}
+            {% render_musics_category %}
+        </div>
+    </aside> {% endcomment %}
+
+    <aside>
+        <div class="aside-body">
+
+            {% for ad in recent_videos_ads_sponsored %}
+                {% if forloop.counter0 == 0 %}
+                {% if ad.video %}
+{#                {% if forloop.first %}#}
+                    <video class="card-image-top" width="325" height="310" controls>
+                        <source src="{{ ad.video.url }}" type="video/mp4">
+                    </video>
+{#                    <h6>{{ ad.title }}</h6>#}
+                        <small>SPONSORED</small>
+                {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </aside>
+
+    <aside id="sponsored">
+        <h1 class="aside-title">Advertisement</h1>
+        <div class="aside-body">
+
+            <ul class="sponsored">
+                {% for ad in recent_attachs_simple_cover %}
+                    {% if not ad.is_rectange %}
+                        <li>
+                            <a href="#">
+                                <img src="{{ ad.image.url }}" height="150">
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+
+    <aside>
+        <div class="aside-body">
+          <figure class="ads">
+              {% for ad in recent_attachs_sponsored_ad %}
+                {% if not ad.is_rectange %}
+                    {% if forloop.counter0 == 0 %}
+                        <img src="{{ ad.image.url }}">
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <figcaption>SPONSORED</figcaption>
+          </figure>
+        </div>
+    </aside>
+
+    {#    Clips Teaser populaires ************************************************#}
+    <aside>
+        <h1 class="aside-title">Videos d'Internet </h1>
+        <div class="aside-body">
+            {% load video_tags %}
+            {% render_popular_videos %}
+        </div>
+    </aside>
+
+    {#    Clips Teaser populaires ************************************************#}
+    <aside>
+        <h1 class="aside-title">Teasers populaires </h1>
+        <div class="aside-body">
+            {% load video_tags %}
+            {% render_popular_teasers %}
+        </div>
+    </aside>
+
+    <aside id="sponsored">
+        <h1 class="aside-title">Advertisement</h1>
+        <div class="aside-body">
+
+            <ul class="sponsored">
+                {% for ad in recent_attachs_simple_ad %}
+                    {% if not ad.is_rectange %}
+                        <li>
+                            <a href="#">
+                                <img src="{{ ad.image.url }}" height="150">
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+
+    <aside>
+        <div class="aside-body">
+            {% for ad in recent_videos_social_sponsored %}
+                {% if forloop.counter0 == 0 %}
+                    {% if ad.video %}
+{#                {% if forloop.first %}#}
+                    <video class="card-image-top" width="325" height="310" controls>
+                        <source src="{{ ad.video.url }}" type="video/mp4">
+                    </video>
+{#                    <h6>{{ ad.title }}</h6>#}
+                        <small>SPONSORED</small>
+                {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </aside>
+
+
+{#    Clips officiels Populaire ************************************************#}
+    <aside>
+        <h1 class="aside-title">Clips Populaire </h1>
+        <div class="aside-body">
+            {% load video_tags %}
+            {% render_popular_clips %}
+        </div>
+    </aside>
+
+    <aside>
+        <div class="aside-body">
+          <figure class="ads">
+              {% for ad in recent_attachs_sponsored_cover %}
+                {% if not ad.is_rectange %}
+                    {% if forloop.counter0 == 1 %}
+                        <img src="{{ ad.image.url }}">
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <figcaption>SPONSORED</figcaption>
+          </figure>
+        </div>
+    </aside>
+
+    {#    Playlists populaires **************************************************#}
+    <aside>
+        <h1 class="aside-title">Playlists populaires</h1>
+        <div class="aside-body">
+            {% load playlist_tags %}
+            {% render_popular_playlists %}
+        </div>
+    </aside>
+
+    {#    Emissions videos populaires **************************************************#}
+    <aside>
+        <h1 class="aside-title">Emissions videos populaires</h1>
+        <div class="aside-body">
+            {% load emission_video_tags %}
+            {% render_popular_emission_videos %}
+        </div>
+    </aside>
+
+    {#    Podcasts populaires **************************************************#}
+    <aside>
+        <h1 class="aside-title">Podcasts populaires</h1>
+        <div class="aside-body">
+            {% load podcast_tags %}
+            {% render_popular_podcasts %}
+        </div>
+    </aside>
+
+</div>
