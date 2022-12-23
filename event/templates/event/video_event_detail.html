@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="single">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-md-8">
+						<ol class="breadcrumb">
+						  <li><a href="#">Acceuil</a></li>
+						  <li class="active"><a href="{% url 'post_list' %}">Events</a></li>
+						</ol>
+						<article class="article main-article">
+							<header>
+								<h2>{{ object.title }}</h2>
+								<ul class="details">
+									<li>Publier il y'a {{ object.timestamp|timesince }} </li>
+									<li><a>{{ object.category }}</a></li>
+								</ul>
+							</header>
+
+							<div class="main">
+								<div class="featured">
+									<figure>
+										<video class="card-image-top" width="680" height="405" controls autoplay>
+                                            <source src="{{ object.video.url }}" type="video/mp4">
+                                        </video>
+									</figure>
+								</div>
+
+								<p>{{ object.description|safe }}</p>
+
+								<blockquote>
+									{% if object.contact_1  %}
+										Contact N°1 : {{ object.contact_1 }}<br/>
+									{% endif %} 
+									{% if object.contact_2  %}
+										Contact N°2 : {{ object.contact_2 }}
+									{% endif %}
+								</blockquote>
+							</div>
+
+                            <div class="row">
+                                <footer>
+                                    <div class="col-md-12">
+                                        <ul class="tags">
+                                            {% for tag in object.event_tags.all %}
+                                                <li><a href="">
+                                                {{ tag }}
+                                                </a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </footer>
+                            </div>
+						</article>
+
+					</div>
+
+					{% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+
+				</div>
+			</div>
+		</section>
+
+{% endblock content %}

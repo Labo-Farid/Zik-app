@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="home">
+			<div class="container">
+                <div class="headline">
+                    <div class="nav" id="headline-nav">
+                        <a class="left carousel-control" role="button" data-slide="prev">
+                            <span class="ion-ios-arrow-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" role="button" data-slide="next">
+                            <span class="ion-ios-arrow-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <div class="owl-carousel owl-theme" id="headline">
+                        <div class="item">
+                            <a href="#"><div class="badge">Tip!</div> Vestibulum ante ipsum primis in faucibus orci</a>
+                        </div>
+                        <div class="item">
+                            <a href="#">Ut rutrum sodales mauris ut suscipit</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+
+				        <div class="row">
+                            {% for event in image_event_published %}
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <article class="article-blog col-md-12">
+                                    <div class="inner">
+                                        <figure>
+                                            <a href="{{ event.get_absolute_url }}">
+                                                <img src="{{ event.image.url }}" alt="Sample Article">
+                                            </a>
+                                        </figure>
+
+                                        <div class="padding">
+                                            <div class="detail">
+                                                <div class="time">Il y'a{{ event.timestamp|timesince }}</div>
+                                                <div class="category">
+                                                    <a href="category.html">{{ event.category }}</a>
+                                                </div>
+                                                <div class="time">{{ event.country }}</div>
+                                            </div>
+                                            <h6><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h6>
+                                            <div class="detail">
+                                                <div class="time"><i class="icon ion-location"></i> - {{ event.event_address }}</div>
+                                            </div>
+                                            <div class="detail">
+                                                <div class="time"><i class="icon ion-android-time"></i> - Le {{ event.event_date }}</div>
+                                            </div>
+                                            <footer>
+                                                <a class="btn btn-primary more" href="{{ event.get_absolute_url }}">
+                                                    <div>Détail</div>
+                                                    <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                                </a>
+                                            </footer>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="container">
+
+                        <!-- Pagination -->
+                        <nav class="d-flex justify-content-center wow fadeIn">
+
+                          <ul class="pagination pg-blue">
+                            {% if queryset.has_previous %}
+                            <li class="page-item">
+                                <a href="?{{ page_request_var }}={{ queryset.previous_page_number }}" class="page-link">
+                                    <i class="ion-ios-arrow-left"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            <li class="page-item"><a href="?{{ page_request_var }}={{ queryset.number }}" class="page-link active">{{ queryset.number }}</a></li>
+
+                            {% if queryset.has_next %}
+                            <li class="page-item">
+                                <a href="?{{ page_request_var }}={{ queryset.next_page_number }}" class="page-link">
+                                    <i class="ion-ios-arrow-right"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                          </ul>
+                        </nav>
+
+                        {% if is_paginated %}
+
+                        <nav class="d-flex justify-content-center wow fadeIn">
+                          <ul class="pagination pg-blue">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{{ page_request_var }}={{ page_obj.previous_page_number }}">
+                                    <i class="ion-ios-arrow-left"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            <li class="page-item"><a href="?{{ page_request_var }}={{ page_obj.number }}" class="page-link active">{{ page_obj.number }}</a></li>
+                            {% if page_obj.has_next %}
+
+                            <li class="page-item">
+                                <a class="page-link" href="?{{ page_request_var }}={{ page_obj.next_page_number }}">
+                                    <i class="ion-ios-arrow-right"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                          </ul>
+                        </nav>
+
+                        {% endif %}
+                    </div>
+
+
+                        <div class="line top">
+                            <div>Videos Event</div>
+                        </div>
+                        <div class="row">
+                            {% for event in video_event_published %}
+                                {% if event.video %}
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <article class="article-blog col-md-12">
+                                    <div class="inner">
+                                            <video class="card-image-top" width="310" height="305" controls>
+                                                <source src="{{ event.video.url }}" type="video/mp4">
+                                            </video>
+                                            <div class="detail">
+                                                <div class="time">Il y'a{{ event.timestamp|timesince }}</div>
+                                                <div class="category">
+                                                    <a href="category.html">{{ event.category }}</a>
+                                                </div>
+                                                <div class="time">{{ event.country }}</div>
+                                            </div>
+                                            <h6><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h6>
+                                            <div class="detail">
+                                                <div class="time"><i class="icon ion-location"></i> - {{ event.event_address }}</div>
+                                            </div>
+                                            <div class="detail">
+                                                <div class="time"><i class="icon ion-android-time"></i> - Le {{ event.event_date }}</div>
+                                            </div>
+                                            <footer>
+                                                <a class="btn btn-primary more" href="{{ event.get_absolute_url }}">
+                                                    <div>Détail</div>
+                                                    <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                                </a>
+                                            </footer>
+                                        </div>
+                                    </article>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="container">
+
+                        <!-- Pagination -->
+                        <nav class="d-flex justify-content-center wow fadeIn">
+
+                          <ul class="pagination pg-blue">
+                            {% if queryset.has_previous %}
+                            <li class="page-item">
+                                <a href="?{{ page_request_var }}={{ queryset.previous_page_number }}" class="page-link">
+                                    <i class="ion-ios-arrow-left"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            <li class="page-item"><a href="?{{ page_request_var }}={{ queryset.number }}" class="page-link active">{{ queryset.number }}</a></li>
+
+                            {% if queryset.has_next %}
+                            <li class="page-item">
+                                <a href="?{{ page_request_var }}={{ queryset.next_page_number }}" class="page-link">
+                                    <i class="ion-ios-arrow-right"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                          </ul>
+                        </nav>
+
+                        {% if is_paginated %}
+
+                        <nav class="d-flex justify-content-center wow fadeIn">
+                          <ul class="pagination pg-blue">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{{ page_request_var }}={{ page_obj.previous_page_number }}">
+                                    <i class="ion-ios-arrow-left"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            <li class="page-item"><a href="?{{ page_request_var }}={{ page_obj.number }}" class="page-link active">{{ page_obj.number }}</a></li>
+                            {% if page_obj.has_next %}
+
+                            <li class="page-item">
+                                <a class="page-link" href="?{{ page_request_var }}={{ page_obj.next_page_number }}">
+                                    <i class="ion-ios-arrow-right"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                          </ul>
+                        </nav>
+
+                        {% endif %}
+                    </div>
+
+
+
+                    <div class="banner">
+                        <a href="#">
+                            <img src="{% static 'images/ads.png' %}" alt="Sample Article">
+                        </a>
+                    </div>
+                    <div class="line transparent little"></div>
+                </div>
+
+                {% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+            </div>
+        </div>
+</section>
+
+{% endblock content %}

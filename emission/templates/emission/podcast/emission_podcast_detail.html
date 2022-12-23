@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <section class="single">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-md-8">
+						<ol class="breadcrumb">
+						  <li><a href="#">Acceuil</a></li>
+						  <li class="active"><a href="{% url 'emission:emission_podcast_home' %}">Podcasts</a></li>
+						</ol>
+						<article class="article main-article">
+							<header>
+								<h2>{{ emission_podcast.title }}</h2>
+								<ul class="details">
+									<li>Il y'a {{ emission_podcast.timestamp|timesince }} </li>
+									<li><a>{{ emission_podcast.category }}</a></li>
+									<li>By <a href="#">{{ emission_podcast.author }}</a></li>
+								</ul>
+							</header>
+
+							<div class="main">
+								<div class="featured">
+									<figure>
+										<img src="{{ emission_podcast.thumbnail.url }}"><br/>
+									</figure>
+									<div class="inner">
+										<audio preload="auto" controls>
+											<source src="{{ emission_podcast.audio.url }}">
+										</audio>
+									</div>
+								</div>
+
+								<p>{{ emission_podcast.description|safe }}</p>
+								<blockquote>
+									Si cet article vous a plu, n’hésitez pas à le partager autour de vous.
+                                    N’oubliez également pas, de vous abonner à nos comptes sociaux, pour ne rater aucune information.
+								</blockquote>
+							</div>
+
+                            <div class="row">
+                                <footer>
+                                    <div class="col-md-12">
+                                        <ul class="tags">
+                                            {% for cat in post.categories.all %}
+                                                <li><a href="category.html">
+                                                {{ cat }}
+                                                </a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </footer>
+                            </div>
+						</article>
+
+						<div class="line"><div>You May Also Like</div></div>
+						<div class="row">
+                            {% for post in related_posts %}
+							<article class="article related col-md-6 col-sm-6 col-xs-12">
+								<div class="inner">
+									<figure>
+										<a href="#">
+											<img src="{{ post.thumbnail.url }}">
+										</a>
+									</figure>
+									<div class="padding">
+										<h6><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h6>
+										<div class="detail">
+											<div class="category"><a href="">{{ post.category }}</a></div>
+											<div class="time">{{ post.timestamp|timesince }} ago</div>
+										</div>
+									</div>
+								</div>
+							</article>
+                            {% endfor %}
+
+						</div>
+
+						<div class="line thin"></div>
+						<div class="comments">
+							<h2 class="title">
+                                {% with comments.count as total_comments %}
+                                    {{total_comments}} commentaire{{total_comments|pluralize}}
+                                {% endwith %}
+                            </h2>
+
+							<div class="row">
+								<div class="comment-list">
+									{% for comment in emission_podcast.get_comments %}
+									<div class="item col-md-6 col-sm-6 col-xs-12">
+										<div class="user">
+											<figure>
+												<img src="{% static 'images/user.PNG' %}" alt="..." class="img-fluid rounded-circle">
+											</figure>
+											<div class="details">
+												<h5 class="name">{{ comment.author.username }}</h5>
+												<div class="time">Il y'a {{ comment.created|timesince }}</div>
+												<div class="description">
+													{{ comment.body }}
+												</div>
+											</div>
+										</div>
+									</div>
+									{% endfor %}
+								</div>
+							</div>
+
+                            {% if request.user.is_authenticated %}
+							<form method="POST" action="." class="commenting-form" class="row">
+								{% csrf_token %}
+								<div class="col-md-12">
+									<h3 class="title">Entrer un commentaire</h3>
+								</div>
+
+								<div class="form-group col-md-12">
+									{{comment_form.as_p}}
+									{% csrf_token %}
+									{{ form }}
+								</div>
+								<div class="form-group col-md-12">
+									<button type="submit" class="btn btn-primary">Commenter</button>
+								</div>
+							</form>
+                            {% else %}
+                                <a href="{% url 'account_login' %}" class="btn btn-primary">Login to comment</a>
+                            {% endif %}
+						</div>
+					</div>
+
+					{% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+
+				</div>
+			</div>
+		</section>
+
+{% endblock content %}

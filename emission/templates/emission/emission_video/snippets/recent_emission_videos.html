@@ -1,0 +1,28 @@
+{% for emission in recent_emission_videos %}
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <article class="article">
+            <div class="inner">
+                <figure>
+                    <video class="card-image-top" width="410" height="245" controls>
+                        <source src="{{ emission.video.url }}" type="video/mp4">
+                    </video>
+                </figure>
+                <div class="padding">
+                    <div class="detail">
+                        <div class="time">{{ emission.timestamp }}</div>
+                        <div class="category"><a href="category.html">{{ emission.category }}</a></div>
+                        <div class="category"><a href="category.html"></a></div>
+                    </div>
+                    <h6><a href="{{ emission.get_absolute_url }}">{{ emission.title }}</a></h6>
+                    <footer>
+                        <a href="{{ emission.get_absolute_url }}" class="btn btn-primary more"><ion-icon name=""></ion-icon>
+                            <span class="bold">
+                                Suivre l'emission
+                            </span>
+                        </a>
+                    </footer>
+                </div>
+            </div>
+        </article>
+    </div>
+{% endfor %}

@@ -1,0 +1,17 @@
+{% for emission in top_emission_videos %}
+    <div class="item">
+        <article class="">
+            <figure>
+                <video class="card-image-top" width="680" height="420" controls>
+                    <source src="{{ emission.video.url }}" type="video/mp4">
+                </video>
+            </figure>
+            <div class="details">
+                <div class="category"><a href="category.html">{{ emission.category }}</a></div>
+                <h5><a href="{{ emission.get_absolute_url }}">{{ emission.title}}</a></h5>
+                <div class="time">Il y'a {{ emission.timestamp|timesince }}</div>
+            </div>
+            <br><br><br>
+        </article>
+    </div>
+{% endfor %}

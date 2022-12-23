@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="single">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-md-8">
+						<ol class="breadcrumb">
+						  <li><a href="#">Acceuil</a></li>
+						  <li class="active"><a href="{% url 'post_list' %}">Events</a></li>
+						</ol>
+						<article class="article main-article">
+							<header>
+								<h2>{{ object.title }}</h2>
+								<ul class="details">
+									<li>Publier il y'a {{ object.timestamp|timesince }} </li>
+									<li><a>{{ object.category }}</a></li>
+								</ul>
+							</header>
+
+							<div class="main">
+								<div class="featured">
+									<figure>
+										<img src="{{ object.image.url }}">
+									</figure>
+								</div>
+
+								<p>{{ object.description|safe }}</p>
+
+							</div>
+
+                            <div class="row">
+                                <footer>
+                                    <div class="col-md-12">
+                                        <ul class="tags">
+                                            {% for tag in object.event_tags.all %}
+                                                <li><a href="">
+                                                {{ tag }}
+                                                </a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </footer>
+                            </div>
+						</article>
+
+					</div>
+
+					{% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+
+				</div>
+			</div>
+		</section>
+
+{% endblock content %}

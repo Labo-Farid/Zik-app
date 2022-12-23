@@ -1,0 +1,13 @@
+{% for emission in popular_emission_video %}
+    <article class="article-mini">
+        <div class="inner">
+            <figure>
+                <img src="{{ emission.thumbnail.url }}" alt="Sample Article">
+            </figure>
+            <div class="padding">
+                <h1><a href="{{ emission.get_absolute_url }}">{{ emission.title }}</a></h1>
+                <p><span class="bold">{{ emission.category}}</span></p>
+            </div>
+        </div>
+    </article>
+{% endfor %}
