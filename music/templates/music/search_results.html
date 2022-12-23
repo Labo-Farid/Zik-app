@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+{% load embed_video_tags %}
+{% load static %}
+
+{% block content %}
+
+    <section class="category">
+		<div class="container">
+		    <div class="row">
+		      	<div class="col-md-8 text-left">
+					<div class="row">
+						<div class="col-md-12">
+							<ol class="breadcrumb">
+							<li><a href="#">Home</a></li>
+							<li class="active">Recherche</li>
+							</ol>
+							<h3 class="page-title">Resultats: "{{ query }}"</h3>
+						</div>
+					</div>
+
+					{% if music_queryset %}
+					<div class="line"></div>
+					<div class="">
+						<h5 class="page-title">Musics : "{{ query }}"</h5><br/>
+					</div>
+					<div class="row">
+						{% for music in music_queryset %}
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							
+							<article class="article-mini">
+								<div class="inner">
+									<figure>
+										<a href="{{ music.get_absolute_url }}">
+											<img src="{{ music.image.url }}" alt="Sample Article">
+										</a>
+									</figure>
+									<div class="padding">
+										<h1><a href="{{ music.get_absolute_url }}">{{ music.title }}</a></h1>
+										<p><span class="bold">{{ music.category}}</span></p>
+									</div>
+								</div>
+							</article>
+						</div>
+						{% endfor %}
+					</div>
+					{% endif %}
+
+
+					{% if post_queryset %}
+					<div class="line"></div>
+					<div class="">
+						<h5 class="page-title">Article : "{{ query }}"</h5><br/>
+					</div>
+					<div class="row">
+						{% for post in post_queryset %}
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<article class="article-mini">
+								<div class="inner">
+									<figure>
+										<a href="{{ post.get_absolute_url }}">
+											<img src="{{ post.image.url }}" alt="Sample Article">
+										</a>
+									</figure>
+									<div class="padding">
+										<h1><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
+										<p><span class="bold">{{ post.category}}</span></p>
+									</div>
+								</div>
+							</article>
+						</div>
+						{% endfor %}
+					</div>
+					{% endif %}
+
+
+					{% if video_queryset %}
+					<div class="line"></div>
+					<div class="">
+						<h5 class="page-title">Videos : "{{ query }}"</h5><br/>
+					</div>
+					<div class="row">
+						{% for video in video_queryset %}
+						{% if video.video %}
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<article class="article-mini">
+								<div class="inner">
+									<figure>
+										<video class="card-image-top" width="125" height="120" controls>
+											<source src="{{ video.video.url }}" type="video/mp4">
+										</video>
+									</figure>
+									<div class="padding">
+										<h1><a href="{{ video.get_absolute_url }}">{{ video.title }}</a></h1>
+										<p><span class="bold">{{ video.category }}</span></p>
+									</div>
+								</div>
+							</article>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+					{% endif %}
+
+
+					{% if clip_queryset %}
+					<div class="line"></div>
+					<div class="">
+						<h5 class="page-title">Clips : "{{ query }}"</h5><br/>
+					</div>
+					<div class="row">
+						{% for clip in clip_queryset %}
+						{% if clip.thumbnail %}
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<article class="article-mini">
+								<div class="inner">
+									<figure>
+										<a href="{{ clip.get_absolute_url }}">
+											<img src="{{ clip.thumbnail.url }}" alt="Sample Article">
+										</a>
+									</figure>
+									<div class="padding">
+										<h1><a href="{{ clip.get_absolute_url }}">{{ clip.title }}</a></h1>
+										<p><span class="bold">{{ clip.category }}</span></p>
+									</div>
+								</div>
+							</article>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+					{% endif %}
+
+
+					{% if teaser_queryset %}
+					<div class="line"></div>
+					<div class="">
+						<h5 class="page-title">Teasers : "{{ query }}"</h5><br/>
+					</div>
+					<div class="row">
+						{% for video in teaser_queryset %}
+						{% if video.video %}
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<article class="article-mini">
+								<div class="inner">
+									<figure>
+										<video class="card-image-top" width="125" height="120" controls>
+											<source src="{{ video.video.url }}" type="video/mp4">
+										</video>
+									</figure>
+									<div class="padding">
+										<h1><a href="{{ video.get_absolute_url }}">{{ video.title }}</a></h1>
+										<p><span class="bold">{{ video.category }}</span></p>
+									</div>
+								</div>
+							</article>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+					{% endif %}
+
+					<div class="row">
+						{% if is_paginated %}
+						<nav class="d-flex justify-content-center wow fadeIn">
+						<ul class="pagination pg-blue">
+
+							{% if page_obj.has_previous %}
+							<li class="page-item">
+							<a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+								<span class="sr-only">Previous</span>
+							</a>
+							</li>
+							{% endif %}
+
+							<li class="page-item active">
+							<a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+								<span class="sr-only">(current)</span>
+							</a>
+							</li>
+
+							{% if page_obj.has_next %}
+							<li class="page-item">
+							<a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+								<span class="sr-only">Next</span>
+							</a>
+							</li>
+							{% endif %}
+						</ul>
+						</nav>
+						{% endif %}
+
+					</div>
+		    	</div>
+
+		      {% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+		    </div>
+		  </div>
+		</section>
+
+
+{% endblock %}

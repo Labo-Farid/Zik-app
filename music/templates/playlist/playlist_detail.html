@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <section class="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-12 col-xs-12">
+                    <div class="row main-article">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="">
+                                <div class="inner">
+                                    <h4>Titre : {{ object.title }}</h4>
+                                    <p><strong>{{ object.music.count }}</strong> chansons</p>
+                                    <br>
+                                    {% for audio in object.music.all %}
+                                        <h6>{{ audio.title }}</h6>
+                                        <audio preload="auto" controls>
+                                            <source src="{{ audio.audio.url }}">
+                                        </audio>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12 article main-article">
+                            <div class="main">
+                                <img class="product__details__pic__item--large"
+                                        src="{{ object.image.url }}" width="100%" alt="">
+                                <br><br>
+                                <p><b>Category :</b> <span>{{ object.playlist_category }}</span></p>
+                                <p>{{ object.description }}</p>
+
+                                <footer>
+                                    
+                                </footer>
+
+                                <div class="main">
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="line">
+                            <div>Related albums</div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        {% for album in related_albums %}
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <article class="article">
+                                    <div class="inner">
+                                        <figure>
+                                            <a href="{{ album.get_absolute_url }}">
+                                                <img src="{{ album.image.url }}" alt="Sample Article">
+                                            </a>
+                                        </figure>
+                                        <div class="padding">
+                                            <div class="detail">
+                                                <div class="time">Il y'a {{ album.created|timesince }}</div>
+                                                <div class="category"><a href="">{{ album.category }}</a></div>
+                                            </div>
+                                            <h6><a href="{{ album.get_absolute_url }}">{{ album.title }}</a></h6>
+                                            <p><span class="bold">
+                                                {% if item.discount_price %}
+                                                    Premium ${{ album.discount_price }}
+                                                {% elif item.price %}
+                                                    Premium ${{ album.price }}
+                                                {% else %}
+                                                    Gratuit
+                                                {% endif %}
+                                            </span></p>
+                                            <footer>
+                                                <a href="#" class="love">
+                                                    <span class="bold">
+                                                    12.000
+                                                    </span>
+                                                    <ion-icon name="download"></ion-icon>
+                                                </a>
+    											<a class="btn btn-primary more" href="{{ album.get_absolute_url }}">
+    												<div><ion-icon name="eye"></ion-icon></div>
+    												<div><ion-icon name="eye"></ion-icon></div>
+    											</a>
+                                                <a class="btn btn-primary more" href="{{ album.get_add_to_cart_url }}">
+                                                    <div><ion-icon name="cart"></ion-icon></div>
+                                                    <div><ion-icon name="cart"></ion-icon></div>
+                                                </a>
+                                            </footer>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        {% endfor %}
+                    </div>
+			    </div>
+
+                {% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+            </div>
+        </div>
+    </section>
+		<!-- Product Details Section End -->
+
+
+{% endblock content %}

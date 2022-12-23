@@ -1,0 +1,16 @@
+{% for playlist in top_playlists %}
+    <div class="item">
+        <article class="featured">
+            <div class="overlay"></div>
+            <figure>
+                <img src="{{ playlist.image.url }}" alt="Sample Article">
+            </figure>
+            <div class="details">
+                <div class="category"><a href="{% url 'music:category_playlist' playlist.playlist_category.slug %}">{{ playlist.playlist_category }}</a></div>
+                <h1><a href="{{ playlist.get_absolute_url }}">{{ playlist.title}}</a></h1>
+                <div class="time">Il y'a {{ playlist.created|timesince }}</div>
+
+            </div>
+        </article>
+    </div>
+{% endfor %}

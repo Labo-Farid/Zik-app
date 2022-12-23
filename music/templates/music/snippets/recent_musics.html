@@ -1,0 +1,37 @@
+{% for music in recent_musics %}
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        <article class="article">
+            <div class="inner">
+                <figure>
+                    <a href="music-detail.html">
+                        <img src="{{ music.image.url }}" alt="Sample Article">
+                    </a>
+                </figure>
+                <div class="padding">
+                    <div class="detail">
+                        <div class="time">Il y'a {{ music.created|timesince }}</div>
+                        <div class="category"><a href="{% url 'music:category_music' music.category.slug %}">{{ music.category }}</a></div>
+                        <div class="category"><a href="">{{ music.artist.country }}</a></div>
+                    </div>
+                    <h6><a href="{{ music.get_absolute_url }}">{{ music.title }}</a></h6>
+                    <p>
+                        <span class="bold">
+                            12.000
+                        </span>
+                        Téléchargements
+                    </p>
+                    <footer>
+                        <a class="btn btn-primary more" href="{{ music.get_absolute_url }}">
+                            <div><ion-icon name="eye"></ion-icon></div>
+                            <div><ion-icon name="eye"></ion-icon></div>
+                        </a>
+                        <a class="btn btn-primary more" href="{{ music.audio.url }}" download="{{ music.audio.url }}">
+                            <div><ion-icon name="download"></ion-icon></div>
+                            <div><ion-icon name="download"></ion-icon></div>
+                        </a>
+                    </footer>
+                </div>
+            </div>
+        </article>
+    </div>
+{% endfor %}

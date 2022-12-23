@@ -1,0 +1,5 @@
+{% comment %} {% for category in categories %}
+    <div class="col-sm-6">
+        <p><a href="{% url 'music:category_music_list' category.slug %}">{{category.name}}</a></p>
+    </div>
+{% endfor %} {% endcomment %}

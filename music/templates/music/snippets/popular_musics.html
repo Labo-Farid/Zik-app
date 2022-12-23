@@ -1,0 +1,15 @@
+{% for music in popular_musics %}
+    <article class="article-mini">
+        <div class="inner">
+            <figure>
+                <a href="{{ music.get_absolute_url }}">
+                    <img src="{{ music.image.url }}" alt="Sample Article">
+                </a>
+            </figure>
+            <div class="padding">
+                <h1><a href="{{ music.get_absolute_url }}">{{ music.title }}</a></h1>
+                <p><span class="bold"><a href="{% url 'music:category_music' music.category.slug %}">{{ music.category}}</a></span></p>
+            </div>
+        </div>
+    </article>
+{% endfor %}

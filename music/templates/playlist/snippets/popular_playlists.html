@@ -1,0 +1,15 @@
+{% for playlist in popular_playlists %}
+    <article class="article-mini">
+        <div class="inner">
+            <figure>
+                <a href="{{ playlist.get_absolute_url }}">
+                    <img src="{{ playlist.image.url }}" alt="Sample Article">
+                </a>
+            </figure>
+            <div class="padding">
+                <h1><a href="{{ playlist.get_absolute_url }}">{{ playlist.title }}</a></h1>
+                <p><span class="bold"><a href="{% url 'music:category_playlist' playlist.playlist_category.slug %}">{{ playlist.playlist_category}}</a></span></p>
+            </div>
+        </div>
+    </article>
+{% endfor %}

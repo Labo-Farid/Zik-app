@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+{% load music_tags %}
+
+{% block content %}
+
+<section class="home">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                <h5>Télechargement de "{{ music.title }}" reussie!</h5>
+                <h3><a href="{% url 'music:musics' %}">Musics</a></h3>
+            
+
+                        
+                <div class="banner">
+                    <a href="#">
+                        <img src="{% static 'images/ads.png' %}" alt="Sample Article">
+                    </a>
+                </div>
+                <div class="line transparent little"></div>
+            </div>
+
+            {% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+        </div>
+    </div>
+</section>
+
+<section class="best-of-the-week">
+<div class="container">
+    <h1><div class="text">Top 10 premium musics</div>
+        <div class="carousel-nav" id="best-of-the-week-nav">
+            <div class="prev">
+                <i class="ion-ios-arrow-left"></i>
+            </div>
+            <div class="next">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </div>
+    </h1>
+    <div class="owl-carousel owl-theme carousel-1">
+        {% for item in object_list %}
+            {% if item.is_best %}
+        <article class="article">
+            <div class="inner">
+                <figure>
+                    <a href="music-detail.html">
+                        <img src="{{ item.image.url }}" alt="Sample Article">
+                    </a>
+                </figure>
+                <div class="padding">
+                    <div class="detail">
+                        <div class="time">December 09, 2016</div>
+                        <div class="category"><a href="category.html">Lifestyle</a></div>
+                    </div>
+                    <h2><a href="music-detail.html">{{ item.title }}Tv Led LG 32 Pouces</a></h2>
+                    <p><span class="bold">FREE</span></p>
+                    <footer>
+                        <a href="#" class="love"><i class="ion-android-favorite-outline"></i></a>
+                        <a class="btn btn-primary more" href="music-detail.html">
+                            <div>Infos</div>
+                            <div><i class="ion-ios-arrow-thin-right"></i></div>
+                        </a>
+                        <a class="btn btn-primary more" href="cart.html">
+                            <div>Download</div>
+                            <div><i class="ion-ios-arrow-thin-right"></i></div>
+                        </a>
+                    </footer>
+                </div>
+            </div>
+        </article>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+</div>
+</section>
+
+{% endblock content %}
+
+

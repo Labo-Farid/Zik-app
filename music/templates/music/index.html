@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load blog_tags %}
+{% load music_tags %}
+{% load video_tags %}
+{% load playlist_tags %}
+{% load emission_video_tags %}
+{% load podcast_tags %}
+
+
+{% block content %}
+
+    <section class="home">
+			<div class="container">
+
+				<div class="row">
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+
+                        {#    TOP ************************************************#}
+                        <div class="owl-carousel owl-theme slide" id="featured">
+                            {% load music_tags %}
+                            {% render_top_musics %}
+						</div>
+
+                        {#    Premium Musics ************************************************#}
+                        <div class="">
+                            <div class="line top">
+                                <div>{% trans "Bonjour tout le monde" %}</div>
+                            </div>
+                            <div class="row">
+                                <h3>{{var}}</h3>
+                            </div>
+                            <div class="">
+                                <a class="btn btn-primary more" href="single.html">
+                                    <div>Plus de musiques preimium</div>
+                                    <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                </a>
+                            </div>
+                            <div class="line transparent little"></div>
+                        </div>
+
+
+                        {#    Premium Musics ************************************************#}
+                        <div class="">
+                            <div class="line top">
+                                <div>Musics Récentes</div>
+                            </div>
+                            <div class="row">
+                                {% load music_tags %}
+                                {% render_recent_musics %}
+                            </div>
+                            <div class="">
+                                <a class="btn btn-primary more" href="single.html">
+                                    <div>Plus de musiques preimium</div>
+                                    <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                </a>
+                            </div>
+                            <div class="line transparent little"></div>
+                        </div>
+
+                        {#    Articles Récents ************************************************#}
+                        <div class="">
+                            <div class="line top">
+                                <div>Articles Récents</div>
+                            </div>
+                            <div class="row">
+                                {% load blog_tags %}
+                                {% render_recent_posts %}
+                            </div>
+                            <div class="">
+                                <a class="btn btn-primary more" href="single.html">
+                                    <div>Tous les articles</div>
+                                    <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                </a>
+                            </div>
+
+                            {#    ADS ************************************************#}
+                            <div class="banner">
+                                <a href="#">
+                                    <img src="{% static 'images/ads.png' %}" alt="Sample Article">
+                                </a>
+                            </div>
+                            <div class="line transparent little"></div>
+                        </div>
+
+
+                        {#    Clips Teaser recent ************************************************#}
+                        <div class="">
+                            <div class="line top">
+                                <div>Teasers Récentes</div>
+                            </div>
+                            <div class="row">
+                                {% load video_tags %}
+                                {% render_recent_teasers %}
+                            </div>
+                            <div class="">
+                                <a class="btn btn-primary more" href="single.html">
+                                    <div>Tous les teasers</div>
+                                    <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                </a>
+                            </div>
+                        </div>
+
+                        {#    Videos reseaux sociaux ************************************************#}
+                        <div class="">
+                            <div class="line top">
+                                <div>Videos Reseaux Sociaux Récentes</div>
+                            </div>
+                            <div class="row">
+                                {% load video_tags %}
+                                {% render_recent_videos %}
+                            </div>
+                            <div class="">
+                                <a class="btn btn-primary more" href="single.html">
+                                    <div>Tous les videos reseaux sociaux</div>
+                                    <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                </a>
+                            </div>
+                        </div>
+
+                        {#    Clips officiel ************************************************#}
+                        <div class="">
+                            <div class="line top">
+                                <div>Clips Récents</div>
+                            </div>
+                            <div class="row">
+                                {% load video_tags %}
+                                {% render_recent_clips %}
+                            </div> 
+                            <div class="">
+                                <a class="btn btn-primary more" href="single.html">
+                                    <div>Tous les clips</div>
+                                    <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                </a>
+                            </div>
+
+                            {#    ADS ************************************************#}
+                            <div class="banner">
+                                <a href="#">
+                                    <img src="{% static 'images/ads.png' %}" alt="Sample Article">
+                                </a>
+                            </div>
+                            <div class="line transparent little"></div>
+                        </div>
+
+                        {#    Premium Playlists ************************************************#}
+                        <div class="">
+                            <div class="line top">
+                                <div>Playlists Récentes</div>
+                            </div>
+                            <div class="row">
+                                {% load playlist_tags %}
+                                {% render_recent_playlists %}
+                            </div>
+                            <div class="">
+                                <a class="btn btn-primary more" href="single.html">
+                                    <div>Toutes les playlists</div>
+                                    <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                </a>
+                            </div>
+                        </div>
+
+                        {#    Podcasts Récentes ************************************************#}
+                        <div class="">
+                            <div class="line top">
+                                <div>Emissions Videos Récentes</div>
+                            </div>
+                            <div class="row">
+                                {% load emission_video_tags %}
+                                {% render_recent_emission_videos %}
+                            </div>
+                            <div class="">
+                                <a class="btn btn-primary more" href="single.html">
+                                    <div>Toutes les émissions vidéos</div>
+                                    <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                </a>
+                            </div>
+                        </div>
+
+                        {#    Podcasts Récentes ************************************************#}
+                        <div class="">
+                            <div class="line top">
+                                <div>Podcasts Récentes</div>
+                            </div>
+                            <div class="row">
+                                {% load podcast_tags %}
+                                {% render_recent_podcasts %}
+                            </div>
+                            <div class="">
+                                <a class="btn btn-primary more" href="single.html">
+                                    <div>Toutes les playlists</div>
+                                    <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                </a>
+                            </div>
+                        </div>
+ 
+                    </div>
+
+                    {% include 'sidebar.html' with recent_posts=recent_posts  %}
+			    </div>
+			</div>
+	</section>
+
+{% endblock content %}

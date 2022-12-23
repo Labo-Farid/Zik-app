@@ -1,0 +1,16 @@
+{% for music in top_musics %}
+    <div class="item">
+        <article class="featured">
+            <div class="overlay"></div>
+            <figure>
+                <img src="{{ music.image.url }}" alt="Sample Article">
+            </figure>
+            <div class="details">
+                <div class="category"><a href="{% url 'music:category_music' music.category.slug %}">{{ music.category }}</a></div>
+                <h1><a href="single.html">{{ music.title}}</a></h1>
+                <div class="time">Il y'a {{ music.created|timesince }}</div>
+
+            </div>
+        </article>
+    </div>
+{% endfor %} 

@@ -1,0 +1,28 @@
+{% for playlist in recent_playlists %}
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        <article class="article">
+            <div class="inner">
+                <figure>
+                    <a href="music-detail.html">
+                        <img src="{{ playlist.image.url }}" alt="Sample Article">
+                    </a>
+                </figure>
+                <div class="padding">
+                    <div class="detail">
+                        <div class="time">{{ playlist.created }}</div>
+                        <div class="category"><a href="{% url 'music:category_playlist' playlist.playlist_category.slug %}">{{ playlist.playlist_category }}</a></div>
+                        <div class="category"><a href="category.html"></a></div>
+                    </div>
+                    <h6><a href="{{ playlist.get_absolute_url }}">{{ playlist.title }}</a></h6>
+                    <footer>
+                        <a href="{{ playlist.get_absolute_url }}" class="btn btn-primary more"><ion-icon name=""></ion-icon>
+                            <span class="bold">
+                            Ecouter
+                            </span>
+                        </a>
+                    </footer>
+                </div>
+            </div>
+        </article>
+    </div>
+{% endfor %}

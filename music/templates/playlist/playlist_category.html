@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% load static %}
+{% load music_tags %}
+
+{% block content %}
+
+<section class="home">
+    <div class="container">
+
+                <div class="row">
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ol class="breadcrumb">
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Playlists</a></li>
+                                <li class="active">Catégories</li>
+                                </ol>
+                                <h3 class="page-title">{{ category.name }} Playlists</h3><br/>
+                            </div>
+                        </div>
+
+                    <div class="">
+                        <div class="row">
+                            {% for playlist in playlist_list %}
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <article class="article">
+                                    <div class="inner">
+                                        <figure>
+                                            <a href="{{ playlist.get_absolute_url }}">
+                                                <img src="{{ playlist.image.url }}" alt="Sample Article">
+                                            </a>
+                                        </figure>
+                                        <div class="padding">
+                                            <div class="detail">
+                                                <div class="time">Il y'a {{ playlist.created|timesince }}</div>
+                                                <div class="category"><a href="">{{ playlist.category }}</a></div>
+                                                <div class="category"><a href="">TG</a></div>
+                                            </div>
+                                            <h6><a href="{{ playlist.get_absolute_url }}">{{ playlist.title }}</a></h6>
+                                            
+                                            <footer>
+                                                <a href="{{ playlist.get_absolute_url }}" class="btn btn-primary more"><ion-icon name=""></ion-icon>
+                                                    <span class="bold">
+                                                    Ecouter
+                                                    </span>
+                                                </a>
+                                            </footer>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="container">
+                              {% if is_paginated %}
+                              <nav class="d-flex justify-content-center wow fadeIn">
+                                <ul class="pagination pg-blue">
+
+                                  {% if page_obj.has_previous %}
+                                  <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                      <span aria-hidden="true">&laquo;</span>
+                                      <span class="sr-only">Previous</span>
+                                    </a>
+                                  </li>
+                                  {% endif %}
+
+                                  <li class="page-item active">
+                                    <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+                                      <span class="sr-only">(current)</span>
+                                    </a>
+                                  </li>
+
+                                  {% if page_obj.has_next %}
+                                  <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                      <span class="sr-only">Next</span>
+                                    </a>
+                                  </li>
+                                  {% endif %}
+                                </ul>
+                              </nav>
+                              {% endif %}
+
+                              </div>
+                        </div>
+
+                    <div class="banner">
+                        <a href="#">
+                            <img src="{% static 'images/ads.png' %}" alt="Sample Article">
+                        </a>
+                    </div>
+                    <div class="line transparent little"></div>
+                </div>
+
+                {% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+            </div>
+        </div>
+</section>
+
+<section class="best-of-the-week">
+<div class="container">
+    <h1><div class="text">Top 10 premium musics</div>
+        <div class="carousel-nav" id="best-of-the-week-nav">
+            <div class="prev">
+                <i class="ion-ios-arrow-left"></i>
+            </div>
+            <div class="next">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </div>
+    </h1>
+    <div class="owl-carousel owl-theme carousel-1">
+        {% for item in object_list %}
+            {% if item.is_best %}
+        <article class="article">
+            <div class="inner">
+                <figure>
+                    <a href="music-detail.html">
+                        <img src="{{ item.image.url }}" alt="Sample Article">
+                    </a>
+                </figure>
+                <div class="padding">
+                    <div class="detail">
+                        <div class="time">December 09, 2016</div>
+                        <div class="category"><a href="category.html">Lifestyle</a></div>
+                    </div>
+                    <h2><a href="music-detail.html">{{ item.title }}Tv Led LG 32 Pouces</a></h2>
+                    <p><span class="bold">FREE</span></p>
+                    <footer>
+                        <a href="#" class="love"><i class="ion-android-favorite-outline"></i></a>
+                        <a class="btn btn-primary more" href="music-detail.html">
+                            <div>Infos</div>
+                            <div><i class="ion-ios-arrow-thin-right"></i></div>
+                        </a>
+                        <a class="btn btn-primary more" href="cart.html">
+                            <div>Download</div>
+                            <div><i class="ion-ios-arrow-thin-right"></i></div>
+                        </a>
+                    </footer>
+                </div>
+            </div>
+        </article>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+</div>
+</section>
+
+{% endblock content %}
+
+
