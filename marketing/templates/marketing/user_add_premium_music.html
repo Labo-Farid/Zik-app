@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}Mail Page {% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <section class="ftco-section">
+			<div class="container">
+                <div class="row">
+                    <h4 class="mb-4 billing-heading">Ajouter votre music en téléchargement gratuit</h4>
+                </div><div class="row">
+                    <p class="mb-4 billing-heading">Le lorem ipsum est, en imprimerie, une suite de mots sans </p>
+                </div>
+
+			  <div class="row justify-content-center">
+
+				<div class="col-md-7 ftco-animate">
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <input class="btn btn-info btn-block" type="submit" value="Envover">
+                    </form>
+				</div>
+				<div class="col-md-5">
+					<div class="row mt-5 pt-3">
+
+						<div class="col-md-12 d-flex mb-5">
+							<div class="cart-detail cart-total p-3 p-md-4">
+								<h3 class="billing-heading mb-4">Cart Total</h3>
+								<p class="d-flex">
+									<span>Subtotal : </span>
+									<span>$20.60</span>
+								</p>
+								<p class="d-flex">
+									<span>Delivery : </span>
+									<span>$0.00</span>
+								</p>
+								<p class="d-flex">
+									<span>Discount : </span>
+									<span>$3.00</span>
+								</p>
+								<hr>
+								<p class="d-flex total-price">
+									<span>Total : </span>
+									<span class="bold">$17.60</span>
+								</p>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="cart-detail p-3 p-md-4">
+								<h3 class="billing-heading mb-4">Payment Method</h3>
+								<div class="form-group">
+									<div class="col-md-12">
+										<div class="radio">
+											<label><input type="radio" name="optradio" class="mr-2"> Direct Bank Tranfer</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<div class="radio">
+											<label><input type="radio" name="optradio" class="mr-2"> Check Payment</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<div class="radio">
+											<label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<div class="checkbox">
+											<label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
+										</div>
+									</div>
+								</div>
+								<p><a href="#"class="btn btn-primary py-3 px-4">Place an order</a></p>
+							</div>
+						</div>
+					</div>
+				</div> <!-- .col-md-8 -->
+			  </div>
+			</div>
+		  </section> <!-- .section -->
+
+{% endblock %}
