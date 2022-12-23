@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load embed_video_tags %}
+{% load static %}
+
+{% block content %}
+
+    <section class="single">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-md-8">
+						<ol class="breadcrumb">
+						  <li><a href="#">Acceuil</a></li>
+						  <li class="active"><a href="{% url 'clips' %}">Clips</a></li>
+						</ol>
+						<article class="article main-article">
+							<header>
+								<h3>{{ object.title }}</h3>
+								<ul class="details">
+									<li>Il y'a {{ object.timestamp|timesince }} </li>
+									<li><a>{{ object.category }}</a></li>
+								</ul>
+							</header>
+
+							<div class="main">
+								<div class="featured">
+                                    {% if object.clip %}
+									<figure>
+										{% video object.clip '710x405' %}
+									</figure>
+                                    {% endif %}
+								</div>
+
+								<p>{{ object.description | safe }}</p>
+							</div>
+
+							<footer>
+                                <div class="col-md-12">
+                                    <ul class="tags">
+                                        <li><a href="#">Buzz</a></li>
+                                        <li><a href="#">Dossier</a></li>
+                                        <li><a href="#">Clash</a></li>
+                                        <li><a href="#">Showbiz</a></li>
+                                        <li><a href="#">Analyse</a></li>
+                                        <li><a href="#">Publicité</a></li>
+{#                                        <a href="#" class="love"><i class="ion-android-favorite-outline"></i> <div>1220</div></a>#}
+                                    </ul>
+                                </div>
+                            </footer>
+						</article>
+
+						<div class="line thin"></div>
+						
+				</div>
+
+					{% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+
+				</div>
+			</div>
+		</section>
+
+
+{% endblock content %}

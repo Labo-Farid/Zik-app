@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load embed_video_tags %}
+{% load static %}
+{% load video_tags %}
+
+
+{% block content %}
+
+    <section class="home">
+			<div class="container">
+				<div class="row">
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+
+                        <div class="row">
+                            {% load video_tags %}
+                            {% render_top_teasers %}
+                        </div>
+
+                        <div class="row">
+                            {% for teaser in teaser_published %}
+                                {% if teaser.video %}
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <video class="card-image-top" width="310" height="305" controls>
+                                        <source src="{{ teaser.video.url }}" type="video/mp4">
+                                    </video>
+                                    <div class="detail">
+                                        <div class="time">Il y'a {{ teaser.timestamp|timesince }}</div>
+                                        <div class="category"><a href="{% url 'category_teaser' teaser.category.slug %}">{{ teaser.category }}</a></div>
+                                    </div>
+                                    <h6><a href="{{ teaser.get_absolute_url }}">{{ teaser.title }}</a></h6>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="banner">
+                            <a href="#">
+                                <img src="{% static 'images/ads.png' %}" alt="Sample Article">
+                            </a>
+                        </div>
+                        <div class="line transparent little"></div>
+                    </div>
+
+                    {% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+			    </div>
+			</div>
+	</section>
+
+{% endblock content %}

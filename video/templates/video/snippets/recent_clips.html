@@ -1,0 +1,17 @@
+{% load embed_video_tags %}
+
+{% for clip in recent_clips %}
+    {% if not clip.is_sponsored %}
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            {% video clip.clip '210x205' %}
+            <div class="detail">
+                <div class="time">Il y'a {{ clip.timestamp|timesince }}</div>
+                <div class="category"><a href="{% url 'category_clip' clip.category.slug %}">{{ clip.category }}</a></div>
+            </div>
+            <h6><a href="{{ clip.get_absolute_url }}">{{ clip.title }}</a></h6>
+        <br><br>
+        </div>
+
+    {% endif %}
+{% endfor %}

@@ -1,0 +1,15 @@
+{% for teaser in top_teasers %}
+    <div class="item">
+        <article class="">
+            <video class="card-image-top" width="680" height="420" controls>
+                <source src="{{ teaser.video.url }}" type="video/mp4">
+            </video>
+            <div class="details">
+                <div class="category"><a href="{% url 'category_teaser' teaser.category.slug %}">{{ teaser.category }}</a></div>
+                <h5><a href="{{ teaser.get_absolute_url }}">{{ teaser.title}}</a></h5>
+                <div class="time">Poster il y'a {{ teaser.timestamp|timesince }}</div>
+            </div>
+            <br><br><br>
+        </article>
+    </div>
+{% endfor %}

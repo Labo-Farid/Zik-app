@@ -1,0 +1,17 @@
+{% for teaser in popular_teasers %}
+    {% if teaser.video %}
+        <article class="article-mini">
+            <div class="inner">
+                <figure>
+                    <video class="card-image-top" width="125" height="120" controls>
+                        <source src="{{ teaser.video.url }}" type="video/mp4">
+                    </video>
+                </figure>
+                <div class="padding">
+                    <h1><a href="{{ teaser.get_absolute_url }}">{{ teaser.title }}</a></h1>
+                    <p><span class="bold"><a href="{% url 'category_teaser' teaser.category.slug %}">{{ teaser.category }}</a></span></p>
+                </div>
+            </div>
+        </article>
+    {% endif %}
+{% endfor %}

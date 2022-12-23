@@ -1,0 +1,19 @@
+
+
+{% for clip in popular_clips %}
+        {% if clip.thumbnail %}
+        <article class="article-mini">
+            <div class="inner">
+                <figure>
+                    <a href="{{ clip.get_absolute_url }}">
+                        <img src="{{ clip.thumbnail.url }}" alt="Sample Article">
+                    </a>
+                </figure>
+                <div class="padding">
+                    <h1><a href="{{ clip.get_absolute_url }}">{{ clip.title }}</a></h1>
+                    <p><span class="bold"><a href="{% url 'category_clip' clip.category.slug %}">{{ clip.category }}</a></span></p>
+                </div>
+            </div>
+        </article>
+    {% endif %}
+{% endfor %}

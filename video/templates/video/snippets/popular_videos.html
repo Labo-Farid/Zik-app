@@ -1,0 +1,17 @@
+{% for video in popular_videos %}
+    {% if video.video %}
+        <article class="article-mini">
+            <div class="inner">
+                <figure>
+                    <video class="card-image-top" width="125" height="120" controls>
+                        <source src="{{ video.video.url }}" type="video/mp4">
+                    </video>
+                </figure>
+                <div class="padding">
+                    <h1><a href="{{ video.get_absolute_url }}">{{ video.title }}</a></h1>
+                    <p><span class="bold"><a href="{% url 'category_video' video.category.slug %}">{{ video.category }}</a></span></p>
+                </div>
+            </div>
+        </article>
+    {% endif %}
+{% endfor %}

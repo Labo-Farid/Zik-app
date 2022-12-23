@@ -1,0 +1,15 @@
+{% for video in top_videos %}
+    <div class="item">
+        <article class="">
+            <video class="card-image-top" width="680" height="420" controls>
+                <source src="{{ video.video.url }}" type="video/mp4">
+            </video>
+            <div class="details">
+                <div class="category"><a href="{% url 'category_video' video.category.slug %}">{{ video.category }}</a></div>
+                <div class="time">Poster il y'a {{ video.timestamp|timesince }}</div>
+                <h5><a href="{{ video.get_absolute_url }}">{{ video.title}}</a></h5>
+            </div>
+            <br><br><br>
+        </article>
+    </div>
+{% endfor %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load embed_video_tags %}
+{% load static %}
+{% load video_tags %}
+
+
+{% block content %}
+
+    <section class="home">
+			<div class="container">
+				<div class="row">
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+
+                        <div class="row">
+                            {% load video_tags %}
+                            {% render_top_clips %}
+                        </div>
+
+                        <div class="row">
+                            {% for clip in clip_published %}
+                                {% if clip.clip %}
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {% video clip.clip '310x305' %}
+                                    <div class="detail">
+                                        <div class="time">Il y'a {{ clip.timestamp|timesince }}</div>
+                                        <div class="category"><a href="{% url 'category_clip' clip.category.slug %}">{{ clip.category }}</a></div>
+                                    </div>
+                                    <h6><a href="{{ clip.get_absolute_url }}">{{ clip.title }}</a></h6>
+                                    <br>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="banner">
+                            <a href="#">
+                                <img src="{% static 'images/ads.png' %}" alt="Sample Article">
+                            </a>
+                        </div>
+                        <div class="line transparent little"></div>
+                    </div>
+
+                    {% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
+			    </div>
+			</div>
+	</section>
+
+{% endblock content %}

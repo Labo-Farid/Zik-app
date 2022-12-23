@@ -1,0 +1,16 @@
+{% for teaser in recent_teasers %}
+        {% if teaser.video %}
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <video class="card-image-top" width="210" height="205" controls>
+                <source src="{{ teaser.video.url }}" type="video/mp4">
+            </video>
+            <div class="detail">
+                <div class="time">Il y'a {{ teaser.timestamp|timesince }}</div>
+                <div class="category"><a href="{% url 'category_teaser' teaser.category.slug %}">{{ teaser.category }}</a></div>
+            </div>
+            <h6><a href="{{ teaser.get_absolute_url }}">{{ teaser.title }}</a></h6>
+    <br><br>
+        </div>
+        {% endif %}
+
+{% endfor %}

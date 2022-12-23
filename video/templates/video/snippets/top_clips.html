@@ -1,0 +1,14 @@
+{% load embed_video_tags %}
+{% for clip in top_clips %}
+    <div class="item">
+        <article class="">
+            {% video clip.clip '680x420' %}
+            <div class="details">
+                <div class="category"><a href="{% url 'category_clip' clip.category.slug %}">{{ clip.category }}</a></div>
+                <div class="time">Poster il y'a {{ clip.timestamp|timesince }}</div>
+                <h5><a href="{{ clip.get_absolute_url }}">{{ clip.title}}</a></h5>
+            </div>
+            <br><br><br>
+        </article>
+    </div>
+{% endfor %}

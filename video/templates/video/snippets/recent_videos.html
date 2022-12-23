@@ -1,0 +1,19 @@
+{% for video in recent_videos %}
+    {% if not video.is_sponsored %}
+
+        {% if video.video %}
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <video class="card-image-top" width="210" height="205" controls>
+                <source src="{{ video.video.url }}" type="video/mp4">
+            </video>
+            <div class="detail">
+                <div class="time">Il y'a {{ video.timestamp|timesince }}</div>
+                <div class="category"><a href="{% url 'category_video' video.category.slug %}">{{ video.category }}</a></div>
+            </div>
+            <h6><a href="{{ video.get_absolute_url }}">{{ video.title }}</a></h6>
+        <br><br>
+        </div>
+        {% endif %}
+
+    {% endif %}
+{% endfor %}
