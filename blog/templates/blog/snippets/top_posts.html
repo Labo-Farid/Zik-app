@@ -1,0 +1,15 @@
+{% for post in top_posts %}
+    <div class="item">
+        <article class="featured">
+            <div class="overlay"></div>
+            <figure>
+                <img src="{{ post.image.url }}" alt="Sample Article">
+            </figure>
+            <div class="details">
+                <div class="category"><a href="">{{ post.category }}</a></div>
+                <h1><a href="{{ post.get_absolute_url }}">{{ post.title}}</a></h1>
+                <div class="time">Il y'a {{ post.created|timesince }}</div>
+            </div>
+        </article>
+    </div>
+{% endfor %}

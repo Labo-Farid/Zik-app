@@ -1,0 +1,14 @@
+{% for post in popular_posts %}
+    <article class="article-mini">
+        <div class="inner">
+            <figure>
+                <a href="{{ post.get_absolute_url }}">
+                    <img src="{{ post.image.url }}" alt="Sample Article">
+                </a>
+            </figure>
+            <div class="padding">
+                <h1><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
+            </div>
+        </div>
+    </article>
+{% endfor %}

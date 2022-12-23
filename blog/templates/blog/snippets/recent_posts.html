@@ -1,0 +1,36 @@
+{% for post in recent_posts %}
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <article class="article-blog col-md-12">
+            <div class="inner">
+                <figure>
+                    <a href="{{ post.get_absolute_url }}">
+                        <img src="{{ post.image.url }}" alt="Sample Article">
+                    </a>
+                </figure>
+
+                <div class="padding">
+                    <div class="detail">
+                        <div class="time">Il y'a{{ post.timestamp|timesince }}</div>
+                        <div class="category">
+                            {% for cat in post.categories.all %}
+                                <a href="category.html">
+                                {{ cat }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                        <div class="time">{{ post.country }}</div>
+                    </div>
+                    <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                    <p>{{ post.body|safe|truncatechars:150 }}</p>
+                    <footer>
+                        <a href="#" class="love"><ion-icon name="eye"></ion-icon> <div>{{ post.view_count }}</div></a>
+                        <a class="btn btn-primary more" href="single.html">
+                            <div>Lire la suite</div>
+                            <div><i class="ion-ios-arrow-thin-right"></i></div>
+                        </a>
+                    </footer>
+                </div>
+            </div>
+        </article>
+    </div>
+    {% endfor %}

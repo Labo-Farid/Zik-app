@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <section class="single">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-md-8">
+						<ol class="breadcrumb">
+						  <li><a href="#">Acceuil</a></li>
+						  <li class="active"><a href="{% url 'post_list' %}">Actualité</a></li>
+						</ol>
+						<article class="article main-article">
+							<header>
+								<h2>{{ post.title }}</h2>
+								<ul class="details">
+									<li>Il y'a {{ post.created|timesince }} </li>
+									<li><a>{{ post.category }}</a></li>
+									<li>Publier par <a href="#">{{ author }}</a></li>
+								</ul>
+                                <ul class="details">
+									<li><a href="{{post.get_absolute_url}}update/">Edit</a></li>
+									<li><a>Delete</a></li>
+{#									<li><a href="{% url 'post_share' post.id %}">Share</a></li>#}
+								</ul>
+							</header>
+
+							<div class="main">
+								<div class="featured">
+									<figure>
+										<img src="{{ post.image.url }}">
+									</figure>
+								</div>
+
+								<p>{{ post.body|safe }}</p>
+								<blockquote>
+									Si cet article vous a plu, n’hésitez pas à le partager autour de vous.
+                                    N’oubliez également pas, de vous abonner à nos comptes sociaux, pour ne rater aucune information.
+								</blockquote>
+							</div>
+
+                            <div class="row">
+                                <footer>
+                                    <div class="col-md-12">
+                                        <ul class="tags">
+                                        {% for tag in post.tags.all  %}
+                                            <li><a href="">{{ tag }}</a></li>
+                                        {% endfor %}
+
+{#                                            <a href="#" class="love"><i class="ion-android-favorite-outline"></i> <div>1220</div></a>#}
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <a href="#" class="love"><i class="ion-android-favorite-outline"></i> <div></div></a>
+                                    </div>
+                                </footer>
+                            </div>
+						</article>
+
+						<div class="line"><div>You May Also Like</div></div>
+						<div class="row">
+                            {% for post in similar_post %}
+							<article class="article related col-md-6 col-sm-6 col-xs-12">
+								<div class="inner">
+									<figure>
+										<a href="#">
+											<img src="{{ post.image.url }}">
+										</a>
+									</figure>
+									<div class="padding">
+										<h6><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h6>
+										<div class="detail">
+											<div class="category"><a href="">{{ post.category }}</a></div>
+											<div class="time">{{ post.created|timesince }} ago</div>
+										</div>
+									</div>
+								</div>
+							</article>
+                            {% endfor %}
+
+						</div>
+
+						<div class="line thin"></div>
+						<div class="comments">
+							<h2 class="title">
+                                {% with comments.count as total_comments %}
+                                    {{total_comments}} commentaire{{total_comments|pluralize}}
+                                {% endwith %}
+                            </h2>
+							<div class="comment-list">
+                                {% for comment in post.get_comments %}
+								<div class="item">
+									<div class="user">
+										<figure>
+                                            <img src="{% static 'images/user.PNG' %}" alt="..." class="img-fluid rounded-circle">
+										</figure>
+										<div class="details">
+											<h5 class="name">{{ comment.author.username }}</h5>
+											<div class="time">Il y'a {{ comment.created|timesince }}</div>
+											<div class="description">
+												{{ comment.body }}
+											</div>
+										</div>
+									</div>
+								</div>
+                                {% endfor %}
+							</div>
+
+                            {% if request.user.is_authenticated %}
+							<form method="POST" action="." class="commenting-form" class="row">
+                            {% csrf_token %}
+								<div class="col-md-12">
+									<h3 class="title">Entrer un commentaire</h3>
+								</div>
+
+								<div class="form-group col-md-12">
+                                  {{comment_form.as_p}}
+                                  {% csrf_token %}
+                                    {{ form }}
+								</div>
+								<div class="form-group col-md-12">
+									<button type="submit" class="btn btn-primary">Commenter</button>
+								</div>
+							</form>
+                            {% else %}
+                                <a href="{% url 'account_login' %}" class="btn btn-primary">Login to comment</a>
+                            {% endif %}
+						</div>
+					</div>
+
+					{% include 'sidebar.html'  %}
+
+				</div>
+			</div>
+		</section>
+  
+{% endblock content %}
+
+
+{% block domReady %}
+  <script>
+    var eventSource = new EventSource(" {% url 'stream' post.id %} ");
+
+    eventSource.onopen = function(){
+        console.log('Ouverture de la source')
+    }
+
+    eventSource.onmessage = function(e){
+        const resp = JSON.parse(e.data)
+        content = ''
+        if (resp?.length <= 0){
+            content = "<h2> You  don't have a comment yet </h2>"
+        }else{
+            resp?.map(function(item, index){
+                content +=buildContent((index+1), 
+                        item['author__username'],
+                        item['body'],
+                        item['created'])
+            })
+        }
+        document.querySelector('.comment').innerHTML = content
+        console.log(resp)
+    }
+
+    eventSource.onerror = function(e){
+        console.error(e)
+    }
+
+    function buildContent(index, author, body, created){
+
+        const content = `
+            <div class="d-flex mb-2">
+                <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                <div class="ms-3">
+                    <div class="fw-bold">
+                    #${index} ${author} 
+                        <span class="text-muted"> at ${formatDate(created)} </span></div>
+                ${body}
+                </div>
+            </div>
+        `
+        return content
+    }
+
+    function formatDate(data){
+        let new_data = new Date(data);
+        return new_data.toUTCString().replace('GMT', '')
+    }
+
+  </script>
+{% endblock domReady %}
